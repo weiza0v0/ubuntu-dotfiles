@@ -1,0 +1,15 @@
+claude
+.claude
+build
+# 含 API key，禁止提交
+zsh/.zsh.d/secrets.zsh
+# clash 订阅链接含 token
+clash-verge/profiles.yaml
+# fcitx5 auto-generated cache
+fcitx5/.config/fcitx5/conf/cached_layouts
+# ipython runtime data
+ipython/.ipython/profile_default/history.sqlite
+ipython/.ipython/profile_default/db/
+ipython/.ipython/profile_default/log/
+ipython/.ipython/profile_default/pid/
+ipython/.ipython/profile_default/security/

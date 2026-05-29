@@ -1,0 +1,49 @@
+# ========================================
+# 主题与外观
+# ========================================
+theme = Ubuntu
+# 降低整体对比度，压暗高亮色
+foreground = #aaaaaa
+palette = 2=#669933
+palette = 3=#999944
+palette = 7=#999999
+palette = 10=#77aa55
+palette = 11=#aaaa55
+palette = 15=#999999
+
+# 字体设置
+font-family = "JetBrainsMono Nerd Font Mono"
+font-size = 19
+
+# 竖线光标，加粗 + 不闪烁
+cursor-style = bar
+cursor-style-blink = false
+cursor-color = #00e5ff
+adjust-cursor-thickness = 3
+custom-shader = ~/.config/ghostty/shaders/cursor_tail.glsl
+custom-shader-animation = always
+
+# ========================================
+# 窗口
+# ========================================
+# 启动时最大化
+maximize = true
+# 关闭窗口/标签不再询问
+confirm-close-surface = false
+# 自定义标题栏颜色
+window-theme = ghostty
+window-titlebar-background = #000000
+
+# ========================================
+# 鼠标行为
+# ========================================
+# 关闭选中即复制，避免覆盖剪贴板中从其他应用复制的内容
+copy-on-select = false
+# 允许程序读取剪贴板
+clipboard-read = allow
+# 右键：复制选中内容到剪贴板，然后粘贴
+# 用法：选中文本 → 右键 → 即完成复制+粘贴
+right-click-action = copy-or-paste
+# 禁用"已复制到剪贴板"提示
+app-notifications = no-clipboard-copy
+mouse-hide-while-typing = true

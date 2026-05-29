@@ -1,0 +1,39 @@
+{
+    "claudeCode.preferredLocation": "panel",
+    "chat.disableAIFeatures": true,
+
+  "claudeCode.environmentVariables": [
+    {
+      "name": "ANTHROPIC_BASE_URL",
+      "value": "https://api.deepseek.com/anthropic"
+    },
+    {
+      "name": "ANTHROPIC_MODEL",
+      "value": "deepseek-v4-pro"
+    },
+    {
+      "name": "ANTHROPIC_SMALL_FAST_MODEL",
+      "value": "deepseek-v4-flash"
+    }
+  ],
+  "claudeCode.allowDangerouslySkipPermissions": true,
+  "claudeCode.skipLogin": true,
+  "workbench.colorTheme": "Dracula",
+  "editor.fontSize": 25,
+  "vim.useSystemClipboard": true,
+  "vim.autoSwitchInputMethod.enable": true,
+  "vim.autoSwitchInputMethod.defaultIM": "1",
+  "vim.autoSwitchInputMethod.obtainIMCmd": "/usr/bin/fcitx5-remote",
+  "vim.autoSwitchInputMethod.switchIMCmd": "/home/weizai0v0/.local/bin/fcitx5-switch.sh {im}",
+  "chat.editor.fontSize": 20,
+  "chat.fontSize": 25,
+  "debug.console.fontSize": 25,
+  "scm.inputFontSize": 25,
+  "terminal.integrated.fontSize": 25,
+  "notebook.markup.fontSize": 25,
+  "notebook.output.fontSize": 25,
+  "markdown.preview.fontSize": 25,
+  "scm.graph.pageSize": 25,
+  "editor.mouseWheelZoom": true,
+  "workbench.sideBar.location": "right"
+}
