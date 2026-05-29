@@ -22,6 +22,8 @@ export LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/local/cuda/lib64${LD_LIBRARY_PATH:+
 # ------------------------------------------------------------------------------
 # 加 bin 到 PATH（几乎零开销）
 export PATH="$HOME/.apps/anaconda3/bin:$PATH"
+# 修复 conda OpenSSL 版本不匹配警告
+export OPENSSL_MODULES="$HOME/.apps/anaconda3/lib/ossl-modules"
 
 # 再用函数包装，首次使用时才 source conda.sh
 conda() {
