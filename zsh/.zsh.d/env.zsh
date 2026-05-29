@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 # 1. 基础路径 (不含 Conda 内部环境路径)
 # ------------------------------------------------------------------------------
-export PATH="$HOME/.local/bin:$HOME/apps/fzf/bin:/usr/local/cuda/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.apps/fzf/bin:/usr/local/cuda/bin:$PATH"
 
 # ------------------------------------------------------------------------------
 # Fcitx5 输入法
@@ -21,17 +21,17 @@ export LD_LIBRARY_PATH=/usr/lib/wsl/lib:/usr/local/cuda/lib64${LD_LIBRARY_PATH:+
 # 3. Conda 懒加载 (首次调用 conda 时才初始化，省 ~350ms 启动时间)
 # ------------------------------------------------------------------------------
 # 加 bin 到 PATH（几乎零开销）
-export PATH="/home/weizai0v0/apps/anaconda3/bin:$PATH"
+export PATH="$HOME/.apps/anaconda3/bin:$PATH"
 
 # 再用函数包装，首次使用时才 source conda.sh
 conda() {
     unfunction conda mamba 2>/dev/null
-    . "/home/weizai0v0/apps/anaconda3/etc/profile.d/conda.sh"
+    . "$HOME/.apps/anaconda3/etc/profile.d/conda.sh"
     conda "$@"
 }
 mamba() {
     unfunction conda mamba 2>/dev/null
-    . "/home/weizai0v0/apps/anaconda3/etc/profile.d/conda.sh"
+    . "$HOME/.apps/anaconda3/etc/profile.d/conda.sh"
     mamba "$@"
 }
 # ------------------------------------------------------------------------------

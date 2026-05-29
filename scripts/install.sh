@@ -9,7 +9,7 @@ trap 'echo "❌ 行号 $LINENO 发生错误。安装中止。"' ERR
 echo "🚀 启动【极致模块化】环境安装..."
 
 # 0. 确保基础路径存在
-mkdir -p ~/apps
+mkdir -p ~/.apps
 mkdir -p ~/.local/bin
 mkdir -p ~/.config
 
@@ -138,7 +138,7 @@ EOS
   fi
 fi
 
-# --- 3. 安装软件本体到 ~/apps 或 ~/.local/bin ---
+# --- 3. 安装软件本体到 ~/.apps 或 ~/.local/bin ---
 
 # 安装 Anaconda
 if [ ! -d "$HOME/apps/anaconda3" ]; then
@@ -155,33 +155,33 @@ fi
 # 安装 Lazygit
 if [ ! -f "$HOME/apps/lazygit/bin/lazygit" ]; then
   echo "📦 安装 Lazygit..."
-  mkdir -p ~/apps/lazygit/bin
+  mkdir -p ~/.apps/lazygit/bin
   LG_VER=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*' || true)
   if [ -z "$LG_VER" ]; then
     echo "⚠️ GitHub API 受限，使用备用版本..."
     LG_VER="0.45.0"
   fi
   curl -fSLo lg.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LG_VER}/lazygit_${LG_VER}_Linux_x86_64.tar.gz"
-  tar xf lg.tar.gz lazygit && mv lazygit ~/apps/lazygit/bin/ && rm lg.tar.gz
+  tar xf lg.tar.gz lazygit && mv lazygit ~/.apps/lazygit/bin/ && rm lg.tar.gz
 fi
 
 # 安装 Yazi
 if [ ! -f "$HOME/apps/yazi/bin/yazi" ]; then
   echo "📂 安装 Yazi..."
-  mkdir -p ~/apps/yazi/bin
+  mkdir -p ~/.apps/yazi/bin
   Y_URL="https://github.com/sxyazi/yazi/releases/latest/download/yazi-x86_64-unknown-linux-gnu.zip"
   curl -Lo yazi.zip "$Y_URL"
   mkdir -p yazi_temp && unzip -q yazi.zip -d yazi_temp
   # 查找并移动二进制文件，不依赖固定目录名
-  find yazi_temp -name yazi -type f -exec mv {} ~/apps/yazi/bin/ \; 2>/dev/null || true
-  find yazi_temp -name ya -type f -exec mv {} ~/apps/yazi/bin/ \; 2>/dev/null || true
+  find yazi_temp -name yazi -type f -exec mv {} ~/.apps/yazi/bin/ \; 2>/dev/null || true
+  find yazi_temp -name ya -type f -exec mv {} ~/.apps/yazi/bin/ \; 2>/dev/null || true
   rm -rf yazi.zip yazi_temp
 fi
 
 # 安装 Neovim (Nightly)
 if [ ! -f "$HOME/apps/nvim/bin/nvim" ]; then
   echo "💤 安装 Neovim (Nightly)..."
-  mkdir -p ~/apps/nvim
+  mkdir -p ~/.apps/nvim
   NV_URL="https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.tar.gz"
   curl -fSLo nvim.tar.gz "$NV_URL" || {
     echo "⚠️ Neovim nightly 下载失败，尝试使用稳定版..."
@@ -189,14 +189,14 @@ if [ ! -f "$HOME/apps/nvim/bin/nvim" ]; then
     [ -z "$NV_VER" ] && NV_VER="v0.10.4"
     curl -fSLo nvim.tar.gz "https://github.com/neovim/neovim/releases/download/${NV_VER}/nvim-linux-x86_64.tar.gz"
   }
-  tar -xzf nvim.tar.gz -C ~/apps/nvim --strip-components=1 && rm nvim.tar.gz
+  tar -xzf nvim.tar.gz -C ~/.apps/nvim --strip-components=1 && rm nvim.tar.gz
 fi
 
 # 安装 FZF
 if [ ! -d "$HOME/apps/fzf" ]; then
   echo "🔍 安装 FZF..."
-  git clone --depth 1 https://github.com/junegunn/fzf.git ~/apps/fzf >/dev/null
-  ~/apps/fzf/install --bin --no-bash --no-zsh --no-fish >/dev/null
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.apps/fzf >/dev/null
+  ~/.apps/fzf/install --bin --no-bash --no-zsh --no-fish >/dev/null
 fi
 
 # 安装 Nerd Font (Yazi/终端图标依赖)
@@ -290,10 +290,10 @@ if command -v dconf &>/dev/null && [ -f "$HOME/.dotfiles/scripts/gnome-dconf.ini
 fi
 
 # 统一映射二进制程序
-[ -f ~/apps/lazygit/bin/lazygit ] && ln -sf ~/apps/lazygit/bin/lazygit ~/.local/bin/lazygit
-[ -f ~/apps/yazi/bin/yazi ] && ln -sf ~/apps/yazi/bin/yazi ~/.local/bin/yazi
-[ -f ~/apps/nvim/bin/nvim ] && ln -sf ~/apps/nvim/bin/nvim ~/.local/bin/nvim
-[ -f ~/apps/fzf/bin/fzf ] && ln -sf ~/apps/fzf/bin/fzf ~/.local/bin/fzf
+[ -f ~/.apps/lazygit/bin/lazygit ] && ln -sf ~/.apps/lazygit/bin/lazygit ~/.local/bin/lazygit
+[ -f ~/.apps/yazi/bin/yazi ] && ln -sf ~/.apps/yazi/bin/yazi ~/.local/bin/yazi
+[ -f ~/.apps/nvim/bin/nvim ] && ln -sf ~/.apps/nvim/bin/nvim ~/.local/bin/nvim
+[ -f ~/.apps/fzf/bin/fzf ] && ln -sf ~/.apps/fzf/bin/fzf ~/.local/bin/fzf
 
 # 安装 toggle-caps (setuid 二进制，需要 sudo)
 if [ ! -f /usr/local/bin/toggle-caps ] && [ -f "$HOME/.dotfiles/bin/toggle-caps" ]; then
