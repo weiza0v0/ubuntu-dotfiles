@@ -280,6 +280,8 @@ else
   stow -vR --dir=. --target="$HOME" ipython
   stow -vR --dir=. --target="$HOME" vscode
   stow -vR --dir=. --target="$HOME" gnome
+  stow -vR --dir=. --target="$HOME" bin
+  stow -vR --dir=. --target="$HOME" claude
   fi
 fi
 
@@ -289,22 +291,15 @@ if command -v dconf &>/dev/null && [ -f "$HOME/.dotfiles/scripts/gnome-dconf.ini
   dconf load / < "$HOME/.dotfiles/scripts/gnome-dconf.ini"
 fi
 
-# 统一映射二进制程序
-[ -f ~/.apps/lazygit/bin/lazygit ] && ln -sf ~/.apps/lazygit/bin/lazygit ~/.local/bin/lazygit
-[ -f ~/.apps/yazi/bin/yazi ] && ln -sf ~/.apps/yazi/bin/yazi ~/.local/bin/yazi
-[ -f ~/.apps/nvim/bin/nvim ] && ln -sf ~/.apps/nvim/bin/nvim ~/.local/bin/nvim
-[ -f ~/.apps/fzf/bin/fzf ] && ln -sf ~/.apps/fzf/bin/fzf ~/.local/bin/fzf
+# ~/.local/bin 已由 stow bin 包管理（symlink 指向 ~/.apps）
 
 # 安装 toggle-caps (setuid 二进制，需要 sudo)
-if [ ! -f /usr/local/bin/toggle-caps ] && [ -f "$HOME/.dotfiles/bin/toggle-caps" ]; then
+if [ ! -f /usr/local/bin/toggle-caps ] && [ -f "$HOME/.dotfiles/scripts/toggle-caps" ]; then
   echo "⌨️ 安装 toggle-caps..."
-  sudo cp "$HOME/.dotfiles/bin/toggle-caps" /usr/local/bin/toggle-caps
+  sudo cp "$HOME/.dotfiles/scripts/toggle-caps" /usr/local/bin/toggle-caps
   sudo chown root:root /usr/local/bin/toggle-caps
   sudo chmod 4755 /usr/local/bin/toggle-caps
 fi
-
-# fcitx5 输入法切换脚本 (VS Code Vim 扩展用)
-[ -f "$HOME/.dotfiles/bin/fcitx5-switch.sh" ] && ln -sf "$HOME/.dotfiles/bin/fcitx5-switch.sh" ~/.local/bin/fcitx5-switch.sh
 
 # --- 5. 安装 Zimfw 核心 ---
 if [ ! -f "$HOME/.zim/init.zsh" ]; then
