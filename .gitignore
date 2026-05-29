@@ -1,5 +1,6 @@
-# Claude Code 运行时数据
-/.claude
+# Claude Code 运行时数据 (skills/ 例外)
+/.claude/*
+!/.claude/skills/
 build
 # 含 API key，禁止提交
 zsh/.zsh.d/secrets.zsh
