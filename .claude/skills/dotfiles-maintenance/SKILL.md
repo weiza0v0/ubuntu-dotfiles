@@ -61,6 +61,33 @@ When spawning an agent for dotfiles work, always include:
 3. The relevant constraints (home directory policy, .gitignore rules, never run `conda init`)
 4. Whether to only research or also make changes
 
+## Change Log (CHANGELOG.md)
+
+**Every maintenance action must be recorded** in `~/.dotfiles/CHANGELOG.md`. This is the long-term memory for future sessions — git log shows code diffs, but changelog explains *why*.
+
+### When to write an entry
+
+- Installing new software (to `~/.apps/` or system)
+- Adding a new stow package
+- Changing config files with non-obvious rationale
+- System-level changes (GNOME, keyboard, services)
+- Fixing bugs that required investigation
+- Any change that future-you might wonder "why did I do that?"
+
+### Entry format
+
+```markdown
+## YYYY-MM-DD
+
+- **Category** — what changed and why (one line per change)
+```
+
+Keep it concise — the commit has the diff, the changelog has the motivation.
+
+### Before any dotfiles work
+
+Read `CHANGELOG.md` first to understand recent changes and avoid re-doing or undoing past work.
+
 ## Home Directory Policy
 
 Only XDG standard directories remain visible:
