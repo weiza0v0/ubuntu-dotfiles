@@ -1,6 +1,6 @@
 ---
 name: dotfiles-maintenance
-description: This skill should be used when the user asks about dotfiles management, adding new configs or software, GNU Stow, system maintenance, conda troubleshooting, GNOME settings, Clash Verge, Kanata keyboard mapping, git secrets cleanup, or Ubuntu home directory organization. Use when the user mentions "dotfiles", "stow 包", "添加配置", "安装软件到 apps", "主目录", "conda", "gnome", "clash", "提交到 git", or "密钥泄漏".
+description: This skill should be used when the user asks about dotfiles management, adding new configs or software, GNU Stow, system maintenance, conda troubleshooting, GNOME settings, Clash Verge, Kanata keyboard mapping, git secrets cleanup, or Ubuntu home directory organization. Use when the user mentions "dotfiles", "stow 包", "添加配置", "安装软件", "装个", "下载安装包", "主目录", "conda", "gnome", "clash", "提交到 git", or "密钥泄漏".
 ---
 
 # Dotfiles & Ubuntu System Maintenance
@@ -29,6 +29,37 @@ This skill covers the maintenance of a modular, GNU Stow-based dotfiles reposito
 ```
 
 **Key principle:** `stow pkg` creates symlinks at `$HOME` mirroring the directory structure inside the package.
+
+## Context Management: Always Use Subagents
+
+This repo has 20+ stow packages, hundreds of config files, and long scripts. Doing everything in the main conversation will compress context quickly. **For any non-trivial work, delegate to subagents.**
+
+### When to spawn a subagent
+
+| Task type | Subagent | Why |
+|-----------|----------|-----|
+| Find which files reference a path/pattern | `Explore` agent | Avoid loading every file into main context |
+| Check all stow packages for consistency | `Explore` agent | 20+ directories, too many to read inline |
+| Add a new stow package (multi-step) | `general-purpose` agent | mkdir + mv + edit install.sh + stow + commit = 5+ files |
+| Update install.sh for new software | `general-purpose` agent | Edits span multiple sections of a long script |
+| Investigate a conda/gnome/stow issue | `Explore` agent | Research first, then report back before acting |
+| Mass-update paths across the repo | `general-purpose` agent | Bulk sed/grep across many files |
+| Audit .gitignore coverage | `Explore` agent | Cross-reference stow packages vs gitignore rules |
+
+### What stays in main conversation
+
+- Reading a single known file path
+- Simple one-line edits
+- Git commit/push (after agent has staged changes)
+- Final review before pushing
+
+### Subagent prompt template
+
+When spawning an agent for dotfiles work, always include:
+1. The repo path (`~/.dotfiles`)
+2. The stow package structure convention (`pkg/.config/app/file` → `~/.config/app/file`)
+3. The relevant constraints (home directory policy, .gitignore rules, never run `conda init`)
+4. Whether to only research or also make changes
 
 ## Home Directory Policy
 
