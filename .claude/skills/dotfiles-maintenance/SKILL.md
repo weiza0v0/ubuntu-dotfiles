@@ -85,7 +85,8 @@ All user software, configs, and data go under dot-prefixed (hidden) paths.
    - `stow -vR --dir=. --target="$HOME" <pkg>` line in the stow section
 4. Apply immediately: `cd ~/.dotfiles && stow -vR <pkg>`
 5. **Write to `CHANGELOG.md`** (see section below for format)
-6. Commit and push.
+6. **Sync `CONFIG-OVERVIEW.md`** — update the relevant section to reflect the new/changed config (see CONFIG-OVERVIEW section below)
+7. Commit and push.
 
 ## Adding New User Software
 
@@ -100,7 +101,8 @@ Software installs to `~/.apps/<name>/` (hidden), binaries exposed via the `bin` 
 3. `stow -vR bin` deploys the symlink to `~/.local/bin/`
 4. Setuid binaries (e.g., toggle-caps) go to `scripts/` and are installed to `/usr/local/bin` with `chmod 4755` by install.sh.
 5. **Write to `CHANGELOG.md`** (see section below for format)
-6. Commit and push.
+6. **Sync `CONFIG-OVERVIEW.md`** — update the relevant section to reflect the new software (see CONFIG-OVERVIEW section below)
+7. Commit and push.
 
 ## Changelog: Long-Term Memory
 
@@ -133,6 +135,35 @@ Every maintenance action (add config, install software, fix issues, refactor) **
 - 用户几个月后忘记某个配置怎么改的 → 翻 CHANGELOG.md 即可
 - conda 路径又变了 → 上次的 mass sed 命令有记录
 - 新机器部署出问题 → changelog 里的踩坑记录可对照排查
+
+## CONFIG-OVERVIEW.md: 可读配置总览
+
+`CONFIG-OVERVIEW.md` 是仓库的配置总览文档，以面向用户阅读的方式汇总所有 stow 包的配置内容。**每次配置变更都必须同步更新此文件。**
+
+### 何时更新
+
+| 变更类型 | 更新方式 |
+|---------|---------|
+| 新增 stow 包 | 在包列表表格添加一行，在对应分类章节添加该包的配置说明 |
+| 修改已有配置项 | 更新对应章节中的具体配置值 |
+| 删除包/配置 | 从表格和章节中移除 |
+| 新增 alias/按键绑定 | 更新对应小节中的表格 |
+| 修改 install.sh 流程 | 更新部署流程章节 |
+| 新增/修改 .gitignore | 更新排除列表 |
+
+### 更新原则
+
+- 保持与现有章节结构一致（Shell → 终端 → 编辑器 → 开发工具 → 部署脚本 → 桌面 → 代理 → 输入法 → 应用 → 部署维护）
+- 配置值应具体，不要模糊描述
+- 表格优于大段文字
+- 文件路径使用相对于 `~/.dotfiles/` 的格式
+
+### 首次生成
+
+此文件可通过多个子 agent 并行扫描仓库生成：
+```
+创建多个子agents阅读点文件目录下的各个文件以及配置 将不同文件夹的配置内容写入一个文件供用户阅读
+```
 
 ## .gitignore Rules
 
