@@ -4,6 +4,13 @@
 
 ---
 
+## 2026-05-30: 修复 fcitx5 标点模块未启用导致 \ 无法输入顿号
+
+- **改动**: `fcitx5/.config/fcitx5/conf/punctuation.conf` 中 `Enabled` 从 `False` 改为 `True`
+- **原因**: 标点模块默认被关闭，中文模式下按 `\` 键无法转换为 `、`（顿号），其他中英文标点转换也不生效
+- **踩坑**: fcitx5 在运行时/退出时会将自己的运行时状态写回配置文件，覆盖手动修改。必须先 `killall fcitx5`，再改配置文件，最后 `fcitx5 -d` 启动
+- **恢复方式**: 按 `Ctrl+.` 可切换标点转换开关；或在配置文件中将 `Enabled` 改回 `False` 后重启 fcitx5
+
 ## 2026-05-30: skill 增加 subagent 上下文管理策略
 
 - **改动**: dotfiles-maintenance skill 新增 Context Management 章节
