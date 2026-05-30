@@ -4,6 +4,12 @@
 
 ---
 
+## 2026-05-30: 禁用 fcitx5 Shift 切换中英文
+
+- **改动**: `fcitx5/.config/fcitx5/config` 中 `[Hotkey/AltTriggerKeys]` 的 `Shift_L` 注释掉
+- **原因**: 打字时容易误触 Shift 导致中英文意外切换，用户习惯用 Ctrl+Space 切换
+- **恢复方式**: 取消注释 `0=Shift_L` 或改为其他按键，然后 `fcitx5 -r` 重启
+
 ## 2026-05-30: 修复 fcitx5 标点模块未启用导致 \ 无法输入顿号
 
 - **改动**: `fcitx5/.config/fcitx5/conf/punctuation.conf` 中 `Enabled` 从 `False` 改为 `True`
