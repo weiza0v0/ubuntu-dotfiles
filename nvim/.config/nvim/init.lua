@@ -9,6 +9,11 @@ opt.relativenumber = true
 opt.termguicolors = true
 opt.clipboard = "unnamedplus"
 opt.swapfile = false
+opt.tabstop = 4
+opt.shiftwidth = 4
+opt.softtabstop = 4
+opt.expandtab = true
+opt.autoindent = true
 
 -- 剪贴板: Wayland 下显式指定用 xclip
 vim.g.clipboard = {
@@ -131,7 +136,7 @@ require("lazy").setup({
 vim.api.nvim_create_autocmd("ModeChanged", {
   pattern = "*:[iR]",
   callback = function()
-    vim.fn.system({ "fcitx5-remote", "-o" })
+    vim.fn.system({ "fcitx5-remote", "-c" })
   end
 })
 -- 离开插入/替换模式(回到普通/可视模式) → 切到英文
