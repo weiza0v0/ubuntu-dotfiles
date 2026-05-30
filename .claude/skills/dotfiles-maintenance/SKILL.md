@@ -61,33 +61,6 @@ When spawning an agent for dotfiles work, always include:
 3. The relevant constraints (home directory policy, .gitignore rules, never run `conda init`)
 4. Whether to only research or also make changes
 
-## Change Log (CHANGELOG.md)
-
-**Every maintenance action must be recorded** in `~/.dotfiles/CHANGELOG.md`. This is the long-term memory for future sessions — git log shows code diffs, but changelog explains *why*.
-
-### When to write an entry
-
-- Installing new software (to `~/.apps/` or system)
-- Adding a new stow package
-- Changing config files with non-obvious rationale
-- System-level changes (GNOME, keyboard, services)
-- Fixing bugs that required investigation
-- Any change that future-you might wonder "why did I do that?"
-
-### Entry format
-
-```markdown
-## YYYY-MM-DD
-
-- **Category** — what changed and why (one line per change)
-```
-
-Keep it concise — the commit has the diff, the changelog has the motivation.
-
-### Before any dotfiles work
-
-Read `CHANGELOG.md` first to understand recent changes and avoid re-doing or undoing past work.
-
 ## Home Directory Policy
 
 Only XDG standard directories remain visible:
@@ -111,7 +84,8 @@ All user software, configs, and data go under dot-prefixed (hidden) paths.
    - `clean_conflict` line for the target path (if it may exist on new machines)
    - `stow -vR --dir=. --target="$HOME" <pkg>` line in the stow section
 4. Apply immediately: `cd ~/.dotfiles && stow -vR <pkg>`
-5. Commit and push.
+5. **Write to `CHANGELOG.md`** (see section below for format)
+6. Commit and push.
 
 ## Adding New User Software
 
@@ -125,6 +99,40 @@ Software installs to `~/.apps/<name>/` (hidden), binaries exposed via the `bin` 
    ```
 3. `stow -vR bin` deploys the symlink to `~/.local/bin/`
 4. Setuid binaries (e.g., toggle-caps) go to `scripts/` and are installed to `/usr/local/bin` with `chmod 4755` by install.sh.
+5. **Write to `CHANGELOG.md`** (see section below for format)
+6. Commit and push.
+
+## Changelog: Long-Term Memory
+
+Every maintenance action (add config, install software, fix issues, refactor) **must** be recorded in `CHANGELOG.md` at the repo root. This serves as long-term memory across Claude sessions.
+
+### Entry format
+
+```markdown
+## YYYY-MM-DD: 简短标题
+
+- **改动**: 做了什么（文件、路径、配置项）
+- **原因**: 为什么这样做/不那样做
+- **踩坑/注意**: 出过什么错、怎么发现的、敏感点
+- **恢复方式**: 如果出问题怎么回滚/修复
+```
+
+### What to record
+
+| Has | Skip |
+|-----|------|
+| 新增/移动/重命名文件或包 | 纯排版/格式调整 |
+| 配置项变更及其影响 | 拼写错误修复（无功能影响） |
+| 踩过的坑和修复步骤 | |
+| 路径迁移的 mass sed 命令 | |
+| 恢复/回滚的具体操作 | |
+| 安全相关（gitignore、密钥泄漏处理） | |
+
+### Why
+
+- 用户几个月后忘记某个配置怎么改的 → 翻 CHANGELOG.md 即可
+- conda 路径又变了 → 上次的 mass sed 命令有记录
+- 新机器部署出问题 → changelog 里的踩坑记录可对照排查
 
 ## .gitignore Rules
 
